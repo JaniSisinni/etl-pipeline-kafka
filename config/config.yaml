@@ -1,0 +1,10 @@
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topic: "etl-topic"
+
+postgresql:
+  host: "localhost"
+  port: 5432
+  database: "etl_db"
+  user: "magenta"
+  password: "*********"

@@ -1,0 +1,26 @@
+##Adding a logger configuration to src/main.py
+import logging
+
+# Setup logging
+logging.basicConfig(
+    filename='logs/etl_pipeline.log',
+    level=logging.INFO,
+    format='%(asctime)s:%(levelname)s:%(message)s'
+)
+
+from extract.kafka_consumer import consume_messages
+from transform.data_transformer import transform
+from load.data_loader import load_data
+
+def main():
+    for message in consume_messages():
+        logging.info(f"Received message: {message}")
+        try:
+            transformed_data = transform(message)
+            load_data(transformed_data)
+            logging.info("Data successfully loaded into warehouse.")
+        except Exception as e:
+            logging.error(f"Error processing message: {e}")
+
+if __name__ == "__main__":
+    main()
